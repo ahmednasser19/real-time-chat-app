@@ -7,7 +7,7 @@ interface DashboardProps { }
 const Dashboard = async ({ }) => {
   const session = await getServerSession(authOptions)
 
-  return <pre>{JSON.stringify(session)}</pre>;
+  return <div>{JSON.stringify(session)}</div>;
 };
 
 export default Dashboard;
