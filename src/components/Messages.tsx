@@ -8,10 +8,15 @@ import { format } from 'date-fns'
 interface MessagesProps {
   initialMessages: Message[]
   sessionId: string
+  chatId: string
+  chatPartner: User
+  sessionImg: string | null | undefined
 
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
+const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatId,
+  chatPartner,
+  sessionImg }) => {
 
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const scrollDownRef = useRef<HTMLDivElement | null>(null)
@@ -70,15 +75,15 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId }) => {
                   'order-1': !isCurrentUser,
                   invisible: hasNextMessageFromSameUser,
                 })}>
-                {/* <Image
+                <Image
                   fill
-                  // src={
-                  //   isCurrentUser ? (sessionImg as string) : chatPartner.image
-                  // }
+                  src={
+                    isCurrentUser ? (sessionImg as string) : chatPartner.image
+                  }
                   alt='Profile picture'
                   referrerPolicy='no-referrer'
                   className='rounded-full'
-                /> */}
+                />
               </div>
             </div>
           </div>)
