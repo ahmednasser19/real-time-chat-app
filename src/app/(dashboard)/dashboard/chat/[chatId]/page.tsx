@@ -14,22 +14,25 @@ interface ChatProps {
         chatId: string;
     }
 }
-
 async function getChatMessages(chatId: string) {
     try {
-        const results: string[] = await fetchRedis("zrange", `chat:${chatId}:messages`, 0, -1)
+        const results: string[] = await fetchRedis(
+            'zrange',
+            `chat:${chatId}:messages`,
+            0,
+            -1
+        )
 
         const dbMessages = results.map((message) => JSON.parse(message) as Message)
 
-        const reveredDbMessages = dbMessages.reverse();
+        const reversedDbMessages = dbMessages.reverse()
 
-        const messages = messageArrayValidator.parse(reveredDbMessages)
+        const messages = messageArrayValidator.parse(reversedDbMessages)
 
-        return messages;
+        return messages
     } catch (error) {
         notFound()
     }
-
 }
 
 const Chat = async ({ params }: ChatProps) => {
@@ -50,8 +53,9 @@ const Chat = async ({ params }: ChatProps) => {
 
     const chatPartner = (await db.get(`user:${chatPartnerId}`)) as User;
 
+    const initialMessages = await getChatMessages(chatId)
 
-    const initialMessages = await getChatMessages(`chat:${chatId}`)
+    // const initialMessages = await getChatMessages(`chat:${chatId}`)
 
 
     return (
